@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Text, Heading } from "@chakra-ui/react";
+import { Box, Button, Text, Heading, Container } from "@chakra-ui/react";
 import {
   Table,
   Thead,
@@ -12,56 +12,82 @@ import {
 } from "@chakra-ui/react";
 
 const Library = () => {
-  const [isEmpty, setIsEmpty] = useState(true);
+  const [books, setBooks] = useState([]);
 
-  const HandleEmptyStatus = () => {
-    setIsEmpty(!isEmpty);
+  const AreBooksEmpty = () => {
+    if (books.length === 0) {
+      return true;
+    }
+    return false;
   };
 
-  if (isEmpty) {
+  const AddBook = () => {
+    setBooks([
+      ...books,
+      {
+        author: "Colette",
+        title: "Green Sealing Wax",
+        form: ["Fiction", "Short Story"],
+        topics: ["Bildungsroman", "Coming of age"],
+        historicalEra: "Modern",
+      },
+    ]);
+  };
+
+  const RemoveLastBook = () => {
+    setBooks((prevBooks) => {
+      const updatedBooks = prevBooks.slice(0, -1);
+      return updatedBooks;
+    });
+  };
+
+  if (AreBooksEmpty()) {
     return (
       <Box>
         <Heading>Library</Heading>
         <Text>You haven&apos;t added any books! Click below to add a book</Text>
-        <Button onClick={HandleEmptyStatus}>Add a book!</Button>
+        <Button onClick={AddBook}>Add a book!</Button>
       </Box>
     );
   }
   return (
     <Box>
       Library
-      {console.log(isEmpty)}
-      <Button onClick={HandleEmptyStatus}>Remove a book!</Button>
-      <TableContainer>
-        <Table variant="simple">
-          <TableCaption>Your main library</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>Author</Th>
-              <Th>Title</Th>
-              <Th>Form</Th>
-              <Th>Topics</Th>
-              <Th>Historical Era</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Td>Author 1</Td>
-              <Td>Book 1</Td>
-              <Td>Fiction</Td>
-              <Td>Politics</Td>
-              <Td>Ancient Greece</Td>
-            </Tr>
-            <Tr>
-              <Td>Author 2</Td>
-              <Td>Book 2</Td>
-              <Td>Non-fiction</Td>
-              <Td>Art</Td>
-              <Td>South America</Td>
-            </Tr>
-          </Tbody>
-        </Table>
-      </TableContainer>
+      <Button onClick={AddBook}>Add a book!</Button>
+      <Button onClick={RemoveLastBook}>Remove last book!</Button>
+      <Container maxW="90%">
+        <TableContainer>
+          <Table variant="simple">
+            <TableCaption>Your main library</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Author</Th>
+                <Th>Title</Th>
+                <Th>Form</Th>
+                <Th>Topics</Th>
+                <Th>Historical Era</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {books.map((book, index) => {
+                return (
+                  <Tr
+                    key={index}
+                    _hover={{ fontWeight: "bold" }}
+                    _pressed={{ background: "gray.400" }}
+                  >
+                    <Td>{book.author}</Td>
+                    <Td>{book.title}</Td>
+                    <Td>{book.form}</Td>
+                    <Td>{book.topics}</Td>
+                    <Td>{book.historicalEra}</Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Container>
     </Box>
   );
 };
