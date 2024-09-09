@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Text, Heading, Container } from "@chakra-ui/react";
+import { Box, Button, Text, Heading, Container, Flex } from "@chakra-ui/react";
 import {
   Table,
   Thead,
@@ -10,6 +10,8 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { v4 as uuidv4 } from "uuid";
 
 const Library = () => {
   const [books, setBooks] = useState([]);
@@ -25,6 +27,7 @@ const Library = () => {
     setBooks([
       ...books,
       {
+        key: uuidv4(),
         author: "Colette",
         title: "Green Sealing Wax",
         form: ["Fiction", "Short Story"],
@@ -34,11 +37,16 @@ const Library = () => {
     ]);
   };
 
-  const RemoveLastBook = () => {
+  const DeleteLastBook = () => {
     setBooks((prevBooks) => {
       const updatedBooks = prevBooks.slice(0, -1);
       return updatedBooks;
     });
+  };
+
+  const DeleteSpecificBook = (id) => {
+    const updatedBooks = books.filter((book) => book.key !== id);
+    setBooks(updatedBooks);
   };
 
   if (AreBooksEmpty()) {
@@ -54,7 +62,7 @@ const Library = () => {
     <Box>
       Library
       <Button onClick={AddBook}>Add a book!</Button>
-      <Button onClick={RemoveLastBook}>Remove last book!</Button>
+      <Button onClick={DeleteLastBook}>Remove last book!</Button>
       <Container maxW="90%">
         <TableContainer>
           <Table variant="simple">
@@ -66,21 +74,26 @@ const Library = () => {
                 <Th>Form</Th>
                 <Th>Topics</Th>
                 <Th>Historical Era</Th>
+                <Th>Actions</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {books.map((book, index) => {
+              {books.map((book) => {
                 return (
-                  <Tr
-                    key={index}
-                    _hover={{ fontWeight: "bold" }}
-                    _pressed={{ background: "gray.400" }}
-                  >
+                  <Tr key={book.key} _hover={{ background: "blue.200" }}>
                     <Td>{book.author}</Td>
                     <Td>{book.title}</Td>
                     <Td>{book.form}</Td>
                     <Td>{book.topics}</Td>
                     <Td>{book.historicalEra}</Td>
+                    <Td>
+                      <Flex justify="center">
+                        <DeleteIcon
+                          onClick={() => DeleteSpecificBook(book.key)}
+                          _hover={{ cursor: "pointer" }}
+                        />
+                      </Flex>
+                    </Td>
                   </Tr>
                 );
               })}
