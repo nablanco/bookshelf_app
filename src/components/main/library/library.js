@@ -65,15 +65,17 @@ const Library = () => {
       <Button onClick={DeleteLastBook}>Remove last book!</Button>
       <Container maxW="90%">
         <TableContainer>
-          <Table variant="simple">
+          <Table variant="simple" size={{ base: "sm", md: "md", lg: "lg" }}>
             <TableCaption>Your main library</TableCaption>
             <Thead>
               <Tr>
                 <Th>Author</Th>
                 <Th>Title</Th>
-                <Th>Form</Th>
-                <Th>Topics</Th>
-                <Th>Historical Era</Th>
+                <Th display={{ base: "none", md: "table-cell" }}>Form</Th>
+                <Th display={{ base: "none", md: "table-cell" }}>Topics</Th>
+                <Th display={{ base: "none", md: "table-cell" }}>
+                  Historical Era
+                </Th>
                 <Th>Actions</Th>
               </Tr>
             </Thead>
@@ -83,9 +85,16 @@ const Library = () => {
                   <Tr key={book.key} _hover={{ background: "blue.200" }}>
                     <Td>{book.author}</Td>
                     <Td>{book.title}</Td>
-                    <Td>{book.form}</Td>
-                    <Td>{book.topics}</Td>
-                    <Td>{book.historicalEra}</Td>
+                    <Td display={{ base: "none", md: "table-cell" }}>
+                      {book.form}
+                    </Td>
+                    <Td display={{ base: "none", md: "table-cell" }}>
+                      {" "}
+                      {book.topics}
+                    </Td>
+                    <Td display={{ base: "none", md: "table-cell" }}>
+                      {book.historicalEra}
+                    </Td>
                     <Td>
                       <Flex justify="center">
                         <DeleteIcon
