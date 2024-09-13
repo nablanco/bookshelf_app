@@ -1,7 +1,12 @@
 import React from "react";
+import Library from "../library/library";
 
 const Home = () => {
-  return <div>home</div>;
+  return (
+    <div>
+      <Library />
+    </div>
+  );
 };
 
 export default Home;
