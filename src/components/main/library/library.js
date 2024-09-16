@@ -51,7 +51,7 @@ const Library = () => {
   if (AreBooksEmpty()) {
     return (
       <Stack spacing={4}>
-        <Heading>Your Library</Heading>
+        <Heading size="md">Your Library</Heading>
         <Text>You haven&apos;t added any books! Click below to add a book</Text>
         <Box>
           <Button onClick={AddBook}>Add a book!</Button>
@@ -61,7 +61,7 @@ const Library = () => {
   }
   return (
     <Stack direction="column" spacing={6}>
-      <Heading>Your Library</Heading>
+      <Heading size="md">Your Library</Heading>
       <Stack direction="row">
         <Button onClick={AddBook}>Add a book!</Button>
         <Button onClick={DeleteLastBook}>Remove last book!</Button>
