@@ -13,7 +13,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 
 const Home = () => {
   return (
-    <Flex direction="column" align="center" mt="24px">
+    <Flex direction="column" align="center">
       <Stack spacing={10} width="90%">
         <Heading size="2xl" alignSelf="center">
           Bibliofiles
