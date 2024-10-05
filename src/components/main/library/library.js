@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Text, Heading, Container, Flex } from "@chakra-ui/react";
+import { Box, Button, Text, Heading, Flex, Stack } from "@chakra-ui/react";
 import {
   Table,
   Thead,
@@ -7,7 +7,6 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
@@ -28,11 +27,11 @@ const Library = () => {
       ...books,
       {
         key: uuidv4(),
-        author: "Colette",
+        author: ["Colette"],
         title: "Green Sealing Wax",
         form: ["Fiction", "Short Story"],
         topics: ["Bildungsroman", "Coming of age"],
-        historicalEra: "Modern",
+        historicalEra: ["Modern"],
       },
     ]);
   };
@@ -51,66 +50,67 @@ const Library = () => {
 
   if (AreBooksEmpty()) {
     return (
-      <Box>
-        <Heading>Library</Heading>
+      <Stack spacing={4}>
+        <Heading size="md">Your Library</Heading>
         <Text>You haven&apos;t added any books! Click below to add a book</Text>
-        <Button onClick={AddBook}>Add a book!</Button>
-      </Box>
+        <Box>
+          <Button onClick={AddBook}>Add a book!</Button>
+        </Box>
+      </Stack>
     );
   }
   return (
-    <Box>
-      Library
-      <Button onClick={AddBook}>Add a book!</Button>
-      <Button onClick={DeleteLastBook}>Remove last book!</Button>
-      <Container maxW="90%">
-        <TableContainer>
-          <Table variant="simple" size={{ base: "sm", md: "md", lg: "lg" }}>
-            <TableCaption>Your main library</TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Author</Th>
-                <Th>Title</Th>
-                <Th display={{ base: "none", md: "table-cell" }}>Form</Th>
-                <Th display={{ base: "none", md: "table-cell" }}>Topics</Th>
-                <Th display={{ base: "none", md: "table-cell" }}>
-                  Historical Era
-                </Th>
-                <Th>Actions</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {books.map((book) => {
-                return (
-                  <Tr key={book.key} _hover={{ background: "blue.200" }}>
-                    <Td>{book.author}</Td>
-                    <Td>{book.title}</Td>
-                    <Td display={{ base: "none", md: "table-cell" }}>
-                      {book.form}
-                    </Td>
-                    <Td display={{ base: "none", md: "table-cell" }}>
-                      {" "}
-                      {book.topics}
-                    </Td>
-                    <Td display={{ base: "none", md: "table-cell" }}>
-                      {book.historicalEra}
-                    </Td>
-                    <Td>
-                      <Flex justify="center">
-                        <DeleteIcon
-                          onClick={() => DeleteSpecificBook(book.key)}
-                          _hover={{ cursor: "pointer" }}
-                        />
-                      </Flex>
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Container>
-    </Box>
+    <Stack direction="column" spacing={6}>
+      <Heading size="md">Your Library</Heading>
+      <Stack direction="row">
+        <Button onClick={AddBook}>Add a book!</Button>
+        <Button onClick={DeleteLastBook}>Remove last book!</Button>
+      </Stack>
+      <TableContainer>
+        <Table variant="simple" size={{ base: "sm", md: "md", lg: "lg" }}>
+          <Thead>
+            <Tr>
+              <Th>Authors</Th>
+              <Th>Title</Th>
+              <Th display={{ base: "none", md: "table-cell" }}>Form</Th>
+              <Th display={{ base: "none", md: "table-cell" }}>Topics</Th>
+              <Th display={{ base: "none", md: "table-cell" }}>
+                Historical Era
+              </Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {books.map((book) => {
+              return (
+                <Tr key={book.key} _hover={{ background: "blue.200" }}>
+                  <Td>{book.author.join(", ")}</Td>
+                  <Td>{book.title}</Td>
+                  <Td display={{ base: "none", md: "table-cell" }}>
+                    {book.form.join(", ")}
+                  </Td>
+                  <Td display={{ base: "none", md: "table-cell" }}>
+                    {" "}
+                    {book.topics.join(", ")}
+                  </Td>
+                  <Td display={{ base: "none", md: "table-cell" }}>
+                    {book.historicalEra.join(", ")}
+                  </Td>
+                  <Td>
+                    <Flex justify="center">
+                      <DeleteIcon
+                        onClick={() => DeleteSpecificBook(book.key)}
+                        _hover={{ cursor: "pointer" }}
+                      />
+                    </Flex>
+                  </Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </Stack>
   );
 };
 

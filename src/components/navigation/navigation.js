@@ -1,18 +1,13 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
-import { Link as ChakraLink } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { Flex } from "@chakra-ui/react";
+
+import ExplainerModal from "./explainerModal";
 
 const Navigation = () => {
   return (
-    <Box>
-      <ChakraLink color="teal.500">
-        <NavLink to="/">Home</NavLink>
-      </ChakraLink>
-      <ChakraLink color="teal.500">
-        <NavLink to="/library">Library</NavLink>
-      </ChakraLink>
-    </Box>
+    <Flex width="100%" justify="flex-end" mt={2}>
+      <ExplainerModal />
+    </Flex>
   );
 };
 
