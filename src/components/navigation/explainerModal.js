@@ -17,7 +17,7 @@ const ExplainerModal = () => {
 
   return (
     <Box mr={2}>
-      <Button onClick={onOpen}>Modal</Button>
+      <Button onClick={onOpen}>Help</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
